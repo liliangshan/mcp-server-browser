@@ -1,6 +1,6 @@
 {
   "name": "@liangshanli/mcp-server-browser",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "MCP Browser server using Playwright to fetch content and save to logs",
   "main": "bin/cli.js",
   "bin": {

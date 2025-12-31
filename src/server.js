@@ -87,7 +87,7 @@ class BrowserMCPServer {
         title,
         url: page.url(),
         saved_path: path.resolve(filePath),
-        content: content.substring(0, 1000) + '... (content truncated, please check the saved file)'
+        content: content
       };
     } catch (err) {
       console.error(`[Browser${PROJECT_NAME ? ` - ${PROJECT_NAME}` : ''}] Error: ${err.message}`);
@@ -152,7 +152,7 @@ class BrowserMCPServer {
     const content = fs.readFileSync(filePath, 'utf8');
     return {
       filename,
-      content: content.length > 50000 ? content.substring(0, 50000) + '... (content too long, truncated)' : content
+      content: content
     };
   }
 
