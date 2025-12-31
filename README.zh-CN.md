@@ -80,8 +80,8 @@ npm start
 {
   "mcpServers": {
     "browser-docs": {
-      "command": "node",
-      "args": ["D:/site/chrome/mcp-server-browser/bin/cli.js"],
+      "command": "npx",
+      "args": ["-y", "@liangshanli/mcp-server-browser"],
       "env": {
         "CHROME_PATH": "C:\\Program Files\\Google\\Chrome\\Application\\chrome.exe",
         "TOOL_PREFIX": "browser",
@@ -101,8 +101,8 @@ npm start
 {
   "mcp.servers": {
     "browser-docs": {
-      "command": "node",
-      "args": ["D:/site/chrome/mcp-server-browser/bin/cli.js"],
+      "command": "npx",
+      "args": ["-y", "@liangshanli/mcp-server-browser"],
       "env": {
         "CHROME_PATH": "C:\\Program Files\\Google\\Chrome\\Application\\chrome.exe",
         "TOOL_PREFIX": "browser",
@@ -123,8 +123,8 @@ npm start
 {
   "mcpServers": {
     "vue-docs": {
-      "command": "node",
-      "args": ["D:/site/chrome/mcp-server-browser/bin/cli.js"],
+      "command": "npx",
+      "args": ["-y", "@liangshanli/mcp-server-browser"],
       "env": {
         "CHROME_PATH": "C:\\Program Files\\Google\\Chrome\\Application\\chrome.exe",
         "TOOL_PREFIX": "vue",
@@ -132,8 +132,8 @@ npm start
       }
     },
     "react-docs": {
-      "command": "node",
-      "args": ["D:/site/chrome/mcp-server-browser/bin/cli.js"],
+      "command": "npx",
+      "args": ["-y", "@liangshanli/mcp-server-browser"],
       "env": {
         "CHROME_PATH": "C:\\Program Files\\Google\\Chrome\\Application\\chrome.exe",
         "TOOL_PREFIX": "react",
