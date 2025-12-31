@@ -68,7 +68,8 @@ function startServer() {
     ...process.env,
     CHROME_PATH: chromePath,
     TOOL_PREFIX: TOOL_PREFIX,
-    PROJECT_NAME: PROJECT_NAME
+    PROJECT_NAME: PROJECT_NAME,
+    DOC_URL: process.env.DOC_URL || ''
   };
 
   const server = spawn('node', [serverPath], {

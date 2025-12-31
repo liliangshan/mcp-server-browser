@@ -51,6 +51,7 @@ The server is configured via environment variables:
 | `CHROME_PATH` | **Required** | `C:\Program Files\Google\Chrome\Application\chrome.exe` | Path to your Chrome/Edge executable. Must be valid. |
 | `TOOL_PREFIX` | Optional | | Optional prefix for tool names (e.g., `doc_`). |
 | `PROJECT_NAME` | Optional | | Optional name for branding tool descriptions. |
+| `DOC_URL` | Optional | | Default documentation URL for this instance. |
 | `MCP_LOG_DIR` | Optional | `./.setting` | Directory where logs and HTML files are stored. |
 
 ## Usage
@@ -128,7 +129,8 @@ You can configure multiple browser server instances with different `TOOL_PREFIX`
       "env": {
         "CHROME_PATH": "C:\\Program Files\\Google\\Chrome\\Application\\chrome.exe",
         "TOOL_PREFIX": "vue",
-        "PROJECT_NAME": "VueNext"
+        "PROJECT_NAME": "VueNext",
+        "DOC_URL": "https://tdesign.tencent.com/vue-next/overview"
       }
     },
     "react-docs": {
@@ -137,7 +139,8 @@ You can configure multiple browser server instances with different `TOOL_PREFIX`
       "env": {
         "CHROME_PATH": "C:\\Program Files\\Google\\Chrome\\Application\\chrome.exe",
         "TOOL_PREFIX": "react",
-        "PROJECT_NAME": "ReactFiber"
+        "PROJECT_NAME": "ReactFiber",
+        "DOC_URL": "https://react.dev"
       }
     }
   }
@@ -172,6 +175,16 @@ All operations and captured HTML files are stored in:
 - `./.setting/` (or `./.setting.<TOOL_PREFIX>/` if prefix is set).
 
 Captured files follow a sanitized naming convention based on their URL, making them easy to identify and manage.
+
+## Recent Updates
+
+- **v1.0.7**: 
+  - Added `save_doc_catalog` and `get_doc_catalog` tools for structured documentation analysis.
+  - Added `DOC_URL` environment variable support for automatic catalog generation.
+  - Optimized catalog storage to `catalog.json` for global access within an instance.
+- **v1.0.2**: 
+  - Initial stable release with full Playwright integration.
+  - Support for multi-instance isolation via `TOOL_PREFIX`.
 
 ## License
 

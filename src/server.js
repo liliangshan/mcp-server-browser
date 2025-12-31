@@ -6,6 +6,7 @@ const path = require('path');
 const CHROME_PATH = process.env.CHROME_PATH || 'C:\\Program Files\\Google\\Chrome\\Application\\chrome.exe';
 const TOOL_PREFIX = process.env.TOOL_PREFIX || '';
 const PROJECT_NAME = process.env.PROJECT_NAME || '';
+const DOC_URL = process.env.DOC_URL || '';
 
 // Get log directory configuration
 const getLogDir = () => {
@@ -156,6 +157,60 @@ class BrowserMCPServer {
     };
   }
 
+  // Save document catalog
+  async save_doc_catalog(params) {
+    const { catalog } = params;
+    if (!catalog) {
+      throw new Error('Missing catalog parameter');
+    }
+
+    const logDir = getLogDir();
+    ensureDir(logDir);
+
+    const filePath = path.join(logDir, 'catalog.json');
+
+    fs.writeFileSync(filePath, JSON.stringify({ catalog, updatedAt: new Date() }, null, 2), 'utf8');
+
+    return {
+      saved_path: path.resolve(filePath),
+      message: 'Catalog saved successfully to catalog.json'
+    };
+  }
+
+  // Get document catalog
+  async get_doc_catalog() {
+    const logDir = getLogDir();
+    const filePath = path.join(logDir, 'catalog.json');
+
+    if (!fs.existsSync(filePath)) {
+      if (DOC_URL) {
+        console.error(`[Browser] Catalog not found. Automatically fetching content from DOC_URL: ${DOC_URL}`);
+        try {
+          const result = await this.browse_url({ url: DOC_URL });
+          return {
+            exists: false,
+            url: DOC_URL,
+            content: result.content,
+            message: `No catalog found in catalog.json. I have automatically fetched the content from the configured DOC_URL (${DOC_URL}). Instruction: Please analyze this content to extract ALL component titles and their URLs, then use the 'save_doc_catalog' tool to save the complete catalog.`
+          };
+        } catch (err) {
+          return {
+            exists: false,
+            message: `No catalog found in catalog.json. Attempted to fetch from DOC_URL (${DOC_URL}) but failed: ${err.message}. Instruction: Please use the 'browser_get_content' tool to fetch the documentation overview page manually, analyze it, and then use 'save_doc_catalog'.`
+          };
+        }
+      }
+
+      return { 
+        exists: false, 
+        message: `No catalog found in catalog.json and DOC_URL is not configured. Instruction: Please use the 'browser_get_content' tool to fetch the page content first (e.g., from an overview or sidebar page), analyze ALL components to extract their titles and URLs, and finally use the 'save_doc_catalog' tool to save the complete catalog to catalog.json.` 
+      };
+    }
+
+    const content = fs.readFileSync(filePath, 'utf8');
+    return JSON.parse(content);
+  }
+
   // Handle MCP JSON-RPC requests
   async handleRequest(request) {
     try {
@@ -221,6 +276,25 @@ class BrowserMCPServer {
                 },
                 required: ['filename']
               }
+            },
+            {
+              name: this.getToolName('save_doc_catalog'),
+              description: this.getToolDescription('Save the document catalog (structure) analyzed from the page. Hint: Call browser_get_content first, analyze ALL components to extract their titles and URLs, and then use this tool to save the global catalog.'),
+              inputSchema: {
+                type: 'object',
+                properties: {
+                  catalog: { type: 'object', description: 'The complete document catalog/structure containing all components' }
+                },
+                required: ['catalog']
+              }
+            },
+            {
+              name: this.getToolName('get_doc_catalog'),
+              description: this.getToolDescription('Get the global document catalog from catalog.json'),
+              inputSchema: {
+                type: 'object',
+                properties: {}
+              }
             }
           ]
         };
@@ -239,6 +313,10 @@ class BrowserMCPServer {
           toolResult = await this.get_saved_files();
         } else if (actualMethodName === 'read_saved_file') {
           toolResult = await this.read_saved_file(args);
+        } else if (actualMethodName === 'save_doc_catalog') {
+          toolResult = await this.save_doc_catalog(args);
+        } else if (actualMethodName === 'get_doc_catalog') {
+          toolResult = await this.get_doc_catalog();
         } else {
           throw new Error(`Unknown tool: ${name}`);
         }

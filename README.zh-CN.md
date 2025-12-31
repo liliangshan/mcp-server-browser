@@ -51,6 +51,7 @@ npm install
 | `CHROME_PATH` | **必须** | `C:\Program Files\Google\Chrome\Application\chrome.exe` | Chrome 或 Edge 可执行文件的路径。必须有效。 |
 | `TOOL_PREFIX` | 可选 | | 工具名称的可选前缀（例如 `doc_`）。 |
 | `PROJECT_NAME` | 可选 | | 用于定制工具描述的项目名称。 |
+| `DOC_URL` | 可选 | | 此实例的默认文档网址。 |
 | `MCP_LOG_DIR` | 可选 | `./.setting` | 存储日志和 HTML 文件的目录。 |
 
 ## 使用方法
@@ -128,7 +129,8 @@ npm start
       "env": {
         "CHROME_PATH": "C:\\Program Files\\Google\\Chrome\\Application\\chrome.exe",
         "TOOL_PREFIX": "vue",
-        "PROJECT_NAME": "VueNext"
+        "PROJECT_NAME": "VueNext",
+        "DOC_URL": "https://tdesign.tencent.com/vue-next/overview"
       }
     },
     "react-docs": {
@@ -137,7 +139,8 @@ npm start
       "env": {
         "CHROME_PATH": "C:\\Program Files\\Google\\Chrome\\Application\\chrome.exe",
         "TOOL_PREFIX": "react",
-        "PROJECT_NAME": "ReactFiber"
+        "PROJECT_NAME": "ReactFiber",
+        "DOC_URL": "https://react.dev"
       }
     }
   }
@@ -172,6 +175,16 @@ npm start
 - `./.setting/` (如果设置了前缀，则为 `./.setting.<TOOL_PREFIX>/`)。
 
 捕获的文件遵循基于 URL 的规范化命名约定，易于识别和管理。
+
+## 最近更新
+
+- **v1.0.7**: 
+  - 新增 `save_doc_catalog` 和 `get_doc_catalog` 工具，用于结构化文档分析。
+  - 新增 `DOC_URL` 环境变量支持，实现目录自动抓取与分析引导。
+  - 优化目录存储逻辑，统一使用 `catalog.json` 进行持久化。
+- **v1.0.2**: 
+  - 初始稳定版本，集成完整 Playwright 能力。
+  - 支持通过 `TOOL_PREFIX` 实现多实例工具与存储隔离。
 
 ## 许可证
 
