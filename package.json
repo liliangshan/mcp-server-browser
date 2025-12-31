@@ -1,0 +1,32 @@
+{
+  "name": "@liangshanli/mcp-server-browser",
+  "version": "1.0.0",
+  "description": "MCP Browser server using Playwright to fetch content and save to logs",
+  "main": "bin/cli.js",
+  "bin": {
+    "mcp-server-browser": "bin/cli.js"
+  },
+  "scripts": {
+    "start": "node bin/cli.js",
+    "server": "node src/server.js"
+  },
+  "keywords": [
+    "mcp",
+    "browser",
+    "playwright",
+    "headless"
+  ],
+  "author": "liliangshan",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/liliangshan/mcp-server-browser.git"
+  },
+  "bugs": {
+    "url": "https://github.com/liliangshan/mcp-server-browser/issues"
+  },
+  "homepage": "https://github.com/liliangshan/mcp-server-browser#readme",
+  "dependencies": {
+    "playwright-core": "^1.57.0"
+  }
+}
